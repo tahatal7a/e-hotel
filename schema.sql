@@ -201,7 +201,6 @@ CREATE TABLE IF NOT EXISTS booking_archieve(
     start_date Date NOT NULL,
     end_date Date NOT NULL,
     PRIMARY KEY(id_booking),
-    FOREIGN KEY (sin_customer) REFERENCES customer(sin_customer),
     CONSTRAINT chk_end_date CHECK (end_date > start_date)
 );
 
@@ -236,9 +235,6 @@ CREATE TABLE IF NOT EXISTS rental_archieve(
     start_date Date NOT NULL,
     end_date Date NOT NULL,
     PRIMARY KEY(id_rental),
-    FOREIGN KEY (sin_customer) REFERENCES customer(sin_customer),
-    FOREIGN KEY (id_room) REFERENCES room(id_room),
-    FOREIGN KEY (id_rental) REFERENCES rental(id_rental),
     CONSTRAINT chk_end_date CHECK (end_date > start_date)
 );
 
