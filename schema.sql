@@ -500,6 +500,26 @@ BEFORE INSERT ON booking
 FOR EACH ROW
 EXECUTE FUNCTION check_room_availability();
 
+-- Function to update room availability
+CREATE OR REPLACE FUNCTION update_room_availability() RETURNS TRIGGER AS $$
+BEGIN
+    UPDATE room SET availability = TRUE WHERE id_room = NEW.id_room AND CURRENT_DATE > NEW.end_date;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger after booking update
+CREATE TRIGGER update_availability_after_booking
+AFTER UPDATE ON booking
+FOR EACH ROW
+EXECUTE FUNCTION update_room_availability();
+
+-- Trigger after rental update
+CREATE TRIGGER update_availability_after_rental
+AFTER UPDATE ON rental
+FOR EACH ROW
+EXECUTE FUNCTION update_room_availability();
+
 
 
 
