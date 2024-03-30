@@ -213,7 +213,6 @@ CREATE TABLE IF NOT EXISTS rental(
     PRIMARY KEY(id_rental),
     FOREIGN KEY (sin_customer) REFERENCES customer(sin_customer),
     FOREIGN KEY (id_room) REFERENCES room(id_room),
-    CONSTRAINT chk_start_date CHECK (start_date >= CURRENT_DATE),
     CONSTRAINT chk_end_date CHECK (end_date > start_date)
 );
 
@@ -299,14 +298,6 @@ ALTER TABLE IF EXISTS hotel
 ADD CONSTRAINT chk_sin_manager_format CHECK (
     sin_manager ~* '^\d{3}-\d{3}-\d{3}$'
 );
-
-
--- Add a column id_customer to the table payment to store the customer who made the payment
-
-ALTER TABLE IF EXISTS payment
-ADD COLUMN sin_customer VARCHAR(18),
-ADD CONSTRAINT fk_sin_customer
-FOREIGN KEY (sin_customer) REFERENCES customer(sin_customer);
 
 
 -- Prohibit the deletion of a hotel chain if it still has hotels
@@ -1655,6 +1646,10 @@ INSERT INTO employee (sin_employee, firstname, lastname, role, street_number, st
 ('000-000-661', 'Zoey', 'Campbell', 'Marketing', 5, 'de Febrero Ave', 'Mexico City', '06080', 'MX', 39),
 ('000-000-662', 'Mila', 'Roberts', 'Customer service', 5, 'de Febrero Ave', 'Mexico City', '06080', 'MX', 39);
 
+UPDATE hotel
+SET sin_manager = '000-000-646'
+WHERE id_hotel = 39;
+
 -- Inserting employee for La Quinta by Wyndham Mexico City
 
 INSERT INTO employee (sin_employee, firstname, lastname, role, street_number, street_name, city, postal_code, country, id_hotel) VALUES
@@ -1675,6 +1670,10 @@ INSERT INTO employee (sin_employee, firstname, lastname, role, street_number, st
 ('000-000-677', 'Leo', 'Baker', 'Human resources', 55, 'Insurgentes Sur Ave', 'Mexico City', '06000', 'MX', 40),
 ('000-000-678', 'Hazel', 'Gonzalez', 'Marketing', 55, 'Insurgentes Sur Ave', 'Mexico City', '06000', 'MX', 40),
 ('000-000-679', 'Mila', 'Perez', 'Customer service', 55, 'Insurgentes Sur Ave', 'Mexico City', '06000', 'MX', 40);
+
+UPDATE hotel
+SET sin_manager = '000-000-663'
+WHERE id_hotel = 40;
 
 
 -- Inserting commodity
@@ -1751,13 +1750,13 @@ FROM
 
 -- Inserting room_commodity
 
-INSERT INTO room_commodity (id_room, commodity_name)
-SELECT
-    id,
-    c.name
-FROM
-    generate_series(1, 200) AS id, 
-    (SELECT name FROM commodity ORDER BY RANDOM() LIMIT 5) AS c;
+--INSERT INTO room_commodity (id_room, commodity_name)
+--SELECT
+--    id,
+--    c.name
+--FROM
+--    generate_series(1, 200) AS id, 
+--    (SELECT name FROM commodity ORDER BY RANDOM() LIMIT 5) AS c;
 
 
 INSERT INTO problem(id, name, description)
@@ -1772,19 +1771,7 @@ VALUES
     (8, 'Sauna not working', 'The sauna in the room is not heating properly'),
     (9, 'Jacuzzi not working', 'The jacuzzi in the room is not heating properly');
 
-INSERT INTO customer (sin_customer, firstname, lastname, check_in_date, street_number, street_name, city, postal_code, country)
-VALUES
-    ('000-000-001', 'John', 'Doe', '2024-12-01', 123, 'Main St', 'Toronto', 'M1M 1M1', 'CA'),
-    ('000-000-002', 'Jane', 'Doe', '2024-12-01', 123, 'Main St', 'Toronto', 'M2M 1M1', 'CA');
-INSERT INTO booking (id_booking, start_date, end_date, sin_customer, id_room)
-VALUES
-    (1, '2024-12-01', '2024-12-05', '000-000-001', 1),
-    (2, '2024-12-01', '2024-12-05', '000-000-002', 2);
 
-INSERT INTO rental (id_rental, start_date, end_date, sin_customer, id_room)
-VALUES
-    (1, '2024-12-01', '2024-12-05', '000-000-001', 1),
-    (2, '2024-12-01', '2024-12-05', '000-000-002', 2);
 
 
 -- Indexes
