@@ -1850,3 +1850,22 @@ ON booking (sin_customer);
 
 CREATE INDEX idx_rental_sin_customer
 ON rental (sin_customer);
+
+
+
+-- Notre 1ere vue
+CREATE VIEW ViewAvailableRoomsByArea AS
+SELECT h.city, COUNT(*) as available_rooms
+FROM room r
+JOIN hotel h ON r.id_hotel = h.id_hotel
+WHERE r.availability = True 
+GROUP BY h.city;
+
+-- Notre 2eme vue
+CREATE VIEW ViewTotalCapacityByHotel AS
+SELECT id_hotel, SUM(capacity) AS total_capacity
+FROM room
+GROUP BY id_hotel;         --pour appelée la vue il faut utiliser cette querry SELECT * FROM ViewTotalCapacityByHotel
+			                                                  --   WHERE id_hotel = YOUR_HOTEL_ID;
+
+
