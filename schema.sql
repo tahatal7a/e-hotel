@@ -1868,5 +1868,5 @@ select h.name, r.capacity, r.room_number
 from hotel as h, room as r
 where h.id_hotel = r.id_hotel
 group by h.name, r.capacity, r.room_number
-
+order by r.capacity;
 
