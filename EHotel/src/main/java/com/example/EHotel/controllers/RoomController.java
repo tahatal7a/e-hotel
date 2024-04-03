@@ -163,6 +163,7 @@ public class RoomController {
         room.setExtensible(roomInfo.getExtensible());
         room.setCapacity(roomInfo.getCapacity());
         room.setHotel(hotel);
+        room.setIdRoom(roomService.findUnusedId());
 
 
         roomService.saveRoom(room);

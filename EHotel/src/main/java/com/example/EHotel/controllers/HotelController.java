@@ -64,8 +64,7 @@ public class HotelController {
         newHotel.setCountry(hotel.getCountry());
         newHotel.setHotelChain(hotelChain);
         newHotel.setManager(manager);
-
-        System.out.println(newHotel.getIdHotel());
+        newHotel.setIdHotel(hotelService.findUnusedId());
 
         hotelService.addHotel(newHotel);
 

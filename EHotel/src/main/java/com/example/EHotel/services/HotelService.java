@@ -39,7 +39,12 @@ public class HotelService {
 
     public Integer findUnusedId() {
         List<Hotel> hotels = hotelRepository.findAll();
-        int expectedId =  hotels.get(hotels.size() - 1).getIdHotel() + 1;
-        return expectedId;
+        if(!hotels.isEmpty()) {
+            int expectedId =  hotels.get(hotels.size() - 1).getIdHotel() + 1;
+            return expectedId;
+        }else {
+            return 1;
+        }
+        
     }
 }

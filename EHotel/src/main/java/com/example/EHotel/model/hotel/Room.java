@@ -2,8 +2,6 @@ package com.example.EHotel.model.hotel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -21,7 +19,6 @@ import lombok.Setter;
 @Table(name = "room")
 public class Room {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id_room")
     private Integer idRoom;
     
