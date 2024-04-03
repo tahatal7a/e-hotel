@@ -1862,10 +1862,11 @@ WHERE r.availability = True
 GROUP BY h.city;
 
 -- Notre 2eme vue
-CREATE VIEW ViewTotalCapacityByHotel AS
-SELECT id_hotel, SUM(capacity) AS total_capacity
-FROM room
-GROUP BY id_hotel;         --pour appelée la vue il faut utiliser cette querry SELECT * FROM ViewTotalCapacityByHotel
-			                                                  --   WHERE id_hotel = YOUR_HOTEL_ID;
+
+CREATE VIEW ViewCapacityByHotel AS
+select h.name, r.capacity, r.room_number
+from hotel as h, room as r
+where h.id_hotel = r.id_hotel
+group by h.name, r.capacity, r.room_number
 
 
