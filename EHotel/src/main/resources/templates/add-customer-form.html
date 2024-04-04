@@ -12,24 +12,40 @@
         <form action="#" th:action="@{/employee/customer/add}" th:object="${customer}" method="post">
                 <label class="form-label" for="sinCustomer">NAS</label>
                 <input type="text" class="form-control" id="sinCustomer" th:field="*{sinCustomer}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('sinCustomer')}" th:errors="*{sinCustomer}">Erreur</div>
+
                 <label class="form-label" for="firstName">Prénom</label>
                 <input type="text" class="form-control" id="firstName" th:field="*{firstname}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('firstname')}" th:errors="*{firstname}">Erreur</div>
+
                 <label class="form-label" for="lastName">Nom</label>
                 <input type="text" class="form-control" id="lastName" th:field="*{lastname}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('lastname')}" th:errors="*{lastname}">Erreur</div>
+
                 <label class="form-label" for="streetNumber">Numéro de rue</label>
                 <input type="text" class="form-control" id="streetNumber" th:field="*{streetNumber}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('streetNumber')}" th:errors="*{streetNumber}">Erreur</div>
+
                 <label class="form-label" for="streetName">Nom de rue</label>
                 <input type="text" class="form-control" id="streetName" th:field="*{streetName}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('streetName')}" th:errors="*{streetName}">Erreur</div>
+
                 <label class="form-label" for="city">Ville</label>
                 <input type="text" class="form-control" id="city" th:field="*{city}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}">Erreur</div>
+
                 <label class="form-label" for="postalCode">Code postal</label>
                 <input type="text" class="form-control" id="postalCode" th:field="*{postalCode}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('postalCode')}" th:errors="*{postalCode}">Erreur</div>
+
                 <label class="form-label" for="country">Pays</label>
                 <select type="text" class="form-control" id="country" th:field="*{country}">
                     <option value="CA">Canada</option>
                     <option value="US">Etat-Unis</option>
                     <option value="MX">Mexique</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('country')}" th:errors="*{country}">Erreur</div>
+                
             <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
         </form>
     </div>

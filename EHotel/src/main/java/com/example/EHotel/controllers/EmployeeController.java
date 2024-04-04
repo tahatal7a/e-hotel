@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.example.EHotel.dtos.AddCustomerDTO;
 import com.example.EHotel.model.customer.Customer;
 import com.example.EHotel.services.CustomerService;
+
+import jakarta.validation.Valid;
 
 
 
@@ -42,7 +45,12 @@ public class EmployeeController {
     }
 
     @PostMapping("/customer/add")
-    public String addCustomer(@ModelAttribute("customer") AddCustomerDTO customerDTO) {
+    public String addCustomer(@Valid @ModelAttribute("customer") AddCustomerDTO customerDTO, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "add-customer-form";
+        }
+        
         Customer newCustomer = new Customer();
         newCustomer.setSinCustomer(customerDTO.getSinCustomer());
         newCustomer.setFirstname(customerDTO.getFirstname());

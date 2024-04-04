@@ -12,8 +12,12 @@
         <form action="#" th:action="@{/room/search}" th:object="${criteria}" method="post">
             <label class="form-label accordion" for="startDate">Date de debut de reservation :</label>
             <input type="date" class="form-control" id="startDate" th:field="*{startDate}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}">Erreur</div>
+
             <label class="form-label accordion" for="endDate">Date de fin de reservation:</label>
             <input type="date" class="form-control" id="endDate" th:field="*{endDate}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('endDate')}" th:errors="*{endDate}">Erreur</div>
+
             <label  class="form-label" for="roomCapacity">Capacité de la chambre :</label>
             <select class="form-select" id="roomCapacity" th:field="*{roomCapacity}">
                 <option value="Simple">Simple</option>
@@ -23,9 +27,12 @@
                 <option value="Suite">Suite</option>
                 <option value="Penthouse">Penthouse</option>
             </select>
-    
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('roomCapacity')}" th:errors="*{roomCapacity}">Erreur</div>
+
             <label class="form-label"  for="maxPrice">Prix maximum :</label>
             <input type="text" class="form-control" id="maxPrice" th:field="*{maxPrice}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('maxPrice')}" th:errors="*{maxPrice}">Erreur</div>
+
     
             <label class="form-label" for="hotelChainId">Nom de la chaine hoteliere:</label>
             <select class="form-select" type="text" id="hotelChainId" th:field="*{hotelChainId}">
@@ -35,6 +42,8 @@
                 <option value="4">AccorHotels</option>
                 <option value="5">Wyndham Hotels & Resorts</option>
             </select>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('hotelChainId')}" th:errors="*{hotelChainId}">Erreur</div>
+
     
             <label class="form-label"  for="startNumber">Nombre d'étoile de l'hotel(min):</label>
             <select class="form-select" type="text" id="startNumber" th:field="*{startNumber}">
@@ -44,9 +53,11 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select>
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('startNumber')}" th:errors="*{startNumber}">Erreur</div>
     
             <label class="form-label" for="roomsNumber">Numéro de la chambre:</label>
             <input type="text" class="form-control" id="roomsNumber" th:field="*{roomsNumber}">
+            <div class="alert alert-danger" th:if="${#fields.hasErrors('roomsNumber')}" th:errors="*{roomsNumber}">Erreur</div>
     
             <button class="btn btn-primary mt-3" type="submit">Rechercher</button>
         </form>

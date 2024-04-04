@@ -14,6 +14,7 @@
             <div class="mb-3">
                 <label for="roomNumber" class="form-label">Numéro de chambre</label>
                 <input type="text" class="form-control" id="roomNumber" th:field="*{roomNumber}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('roomNumber')}" th:errors="*{roomNumber}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="roomAvailability" class="form-label">Disponibilité de la chambre</label>
@@ -21,6 +22,7 @@
                     <option value=true>Disponible</option>
                     <option value=false>Non disponible</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('availability')}" th:errors="*{availability}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="capacity" class="form-label">Capacité de la chambre</label>
@@ -32,10 +34,12 @@
                     <option value="Suite">Suite</option>
                     <option value="Penthouse">Penthouse</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('capacity')}" th:errors="*{capacity}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="price" class="form-label">Prix de la chambre</label>
                 <input type="text" class="form-control" id="roomPrice" th:field="*{price}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="roomView" class="form-label">Vue de la chambre</label>
@@ -53,6 +57,7 @@
                     <option value="Street">Street</option>
                     <option value="Other">Other</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('view')}" th:errors="*{view}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="extensible" class="form-label">Extensible</label>
@@ -60,6 +65,7 @@
                     <option value=true>Oui</option>
                     <option value=false>Non</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('extensible')}" th:errors="*{extensible}">Erreur</div>
             </div>
 
             <div class="mb-3">
@@ -67,6 +73,7 @@
                 <select class="form-select" id="hotelId" th:field="*{idHotel}">
                     <option th:each="hotel : ${hotels}" th:value="${hotel.idHotel}" th:text="${hotel.name}"></option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('idHotel')}" th:errors="*{idHotel}">Erreur</div>
             </div>
 
             <button type="submit" class="btn btn-primary">Ajouter</button>

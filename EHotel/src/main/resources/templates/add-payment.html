@@ -13,10 +13,12 @@
             <div class="mb-3">
                 <label for="amount" class="form-label">Montant</label>
                 <input type="text" class="form-control" id="amount" th:field="*{amount}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('amount')}" th:errors="*{amount}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="date" class="form-label">Date</label>
                 <input type="date" class="form-control" id="date" th:field="*{paymentDate}">
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('paymentDate')}" th:errors="*{paymentDate}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="paymentMethod" class="form-label">Méthode de paiement</label>
@@ -27,6 +29,7 @@
                     <option value="Check">Check</option>
                     <option value="Bank transfer">Bank transfer</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('paymentMethod')}" th:errors="*{paymentMethod}">Erreur</div>
             </div>
             <div class="mb-3">
                 <label for="paymentStatus" class="form-label">Payment Status</label>
@@ -35,6 +38,7 @@
                     <option value="Pending">En attente</option>
                     <option value="Refunded">Rembourser</option>
                 </select>
+                <div class="alert alert-danger" th:if="${#fields.hasErrors('paymentStatus')}" th:errors="*{paymentStatus}">Erreur</div>
             </div>
             <button type="submit" class="btn btn-primary">Enregistrer</button>
         </form>

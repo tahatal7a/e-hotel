@@ -12,8 +12,11 @@ import com.example.EHotel.model.hotel.Hotel;
 import com.example.EHotel.services.EmployeeService;
 import com.example.EHotel.services.HotelService;
 
+import jakarta.validation.Valid;
+
 import java.util.List;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -47,7 +50,15 @@ public class ManagerController {
     }
 
     @PostMapping("/employee/add")
-    public String addEmployee(@ModelAttribute("employee") AddEmployeeDTO employeeDTO) {
+    public String addEmployee(@Valid @ModelAttribute("employee") AddEmployeeDTO employeeDTO, BindingResult result, Model model) {
+
+
+        if(result.hasErrors()) {
+            List<Hotel> hotels = hotelService.getHotels();
+            model.addAttribute("hotels", hotels);
+            return "add-employee-form";
+        }
+
         Employee newEmployee = new Employee();
         Hotel hotel = hotelService.getHotel(employeeDTO.getIdHotel());
 

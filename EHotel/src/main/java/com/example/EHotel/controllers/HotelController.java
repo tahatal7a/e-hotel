@@ -16,7 +16,11 @@ import com.example.EHotel.services.EmployeeService;
 import com.example.EHotel.services.HotelChainService;
 import com.example.EHotel.services.HotelService;
 
+
+import jakarta.validation.Valid;
+
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 
 @Controller
 @RequestMapping("/hotel")
@@ -48,7 +52,17 @@ public class HotelController {
     }
 
     @PostMapping("/hotel/add")
-    public String addHotel(@ModelAttribute("hotel") CreateHotelDTO hotel) {
+    public String addHotel(@Valid @ModelAttribute("hotel") CreateHotelDTO hotel, BindingResult result, Model model) {
+
+        if(result.hasErrors()) {
+            List<HotelChain> hotelChains = hotelChainService.getHotelChains();
+            List<Employee> employees = employeeService.getEmployees();
+            model.addAttribute("hotelChains", hotelChains);
+            model.addAttribute("employees", employees);
+            return "add-hotel-form";
+        }
+
+
         Hotel newHotel = new Hotel();
         HotelChain hotelChain = hotelChainService.getHotelChain(hotel.getIdHotelChain());
         Employee manager = employeeService.getEmployee(hotel.getSinManager());

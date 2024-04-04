@@ -2,9 +2,11 @@ package com.example.EHotel.controllers;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +25,8 @@ import com.example.EHotel.services.BookingService;
 import com.example.EHotel.services.CustomerService;
 import com.example.EHotel.services.HotelService;
 import com.example.EHotel.services.RoomService;
+
+import jakarta.validation.Valid;
 
 @Controller
 @RequestMapping("/room")
@@ -45,7 +49,11 @@ public class RoomController {
     }
 
     @PostMapping("/search")
-    public String searchRooms(@ModelAttribute("criteria") RoomSearchCriteriaDTO criteria, Model model) {
+    public String searchRooms(@Valid @ModelAttribute("criteria") RoomSearchCriteriaDTO criteria, Model model, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "search";
+        }
         List<Room> rooms = roomService.findAvailableRooms(criteria);
         model.addAttribute("rooms", rooms);
         return "search";
@@ -64,7 +72,11 @@ public class RoomController {
         return "booking-form";
     }
     @PostMapping("/booking")
-    public String bookRoom(@ModelAttribute("booking") BookingDTO bookingDTO) {
+    public String bookRoom(@Valid @ModelAttribute("booking") BookingDTO bookingDTO, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()) {
+            return "booking-form";
+        }
 
         Customer existingCustomer = customerService.getCustomer(bookingDTO.getSinCustomer());
 
@@ -152,7 +164,14 @@ public class RoomController {
     }
 
     @PostMapping("/add")
-    public String addRoom(@ModelAttribute("room") CreateRoomDTO roomInfo) {
+    public String addRoom(@Valid @ModelAttribute("room") CreateRoomDTO roomInfo, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+
+            List<Hotel> hotels = hotelService.getHotels();
+            model.addAttribute("hotels", hotels);
+            return "add-room-form"; 
+        }
+
         Room room = new Room();
         Hotel hotel = hotelService.getHotel(roomInfo.getIdHotel());
 
@@ -165,9 +184,7 @@ public class RoomController {
         room.setHotel(hotel);
         room.setIdRoom(roomService.findUnusedId());
 
-
         roomService.saveRoom(room);
-
 
         return "redirect:/room/list/1";
     }
